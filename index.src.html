@@ -1,0 +1,607 @@
+<title>Daniyalkhanmedico</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500;700&display=swap">
+
+<style>
+/* ============================================================
+   Daniyalkhanmedico — a paper-and-highlighter identity.
+   Single light theme by intent: notebook paper, marker pink,
+   highlighter yellow. No dark variant.
+   ============================================================ */
+:root{
+  --paper:#FFFDF7;
+  --kraft:#F7F1E4;
+  --card:#FFFFFF;
+  --ink:#24303A;
+  --ink-soft:#5E6E7A;
+  --ink-faint:#8B9AA4;
+  --rule:#E7DFCC;
+  --rule-soft:#F0E9D9;
+  --marker:#FF5470;
+  --marker-deep:#E23A57;
+  --highlight:#FFE45C;
+  --mint:#12A594;
+  --mint-soft:#DEF3EF;
+  --sky:#3D7EFF;
+
+  --shadow-lift:0 1px 0 var(--rule), 0 12px 28px -18px rgba(36,48,58,.5);
+
+  --step--1:.8125rem;
+  --step-0:1.0625rem;
+  --step-1:1.3125rem;
+  --step-2:1.75rem;
+  --step-3:2.375rem;
+  --step-4:clamp(2.6rem,6.4vw,4.6rem);
+
+  --display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
+  --body:"Newsreader",Georgia,"Times New Roman",serif;
+  --mono:"JetBrains Mono",ui-monospace,"Consolas",monospace;
+
+  --gut:clamp(1.25rem,4vw,2.5rem);
+  --maxw:1140px;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+
+body{
+  margin:0;
+  background-color:var(--paper);
+  /* faint ruled paper, drawn once and repeated */
+  background-image:repeating-linear-gradient(to bottom,transparent 0 33px,var(--rule-soft) 33px 34px);
+  background-attachment:fixed;
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:var(--step-0);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+
+.wrap{max-width:var(--maxw);margin-inline:auto;padding-inline:var(--gut)}
+
+h1,h2,h3,.display{font-family:var(--display);font-weight:800;letter-spacing:-.02em;line-height:1.02;text-wrap:balance;margin:0}
+p{margin:0}
+a{color:inherit}
+
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+:focus-visible{outline:3px solid var(--sky);outline-offset:3px;border-radius:2px}
+
+/* ---------- highlighter swipe ---------- */
+.swipe{position:relative;display:inline;z-index:0}
+.swipe::before{
+  content:"";position:absolute;z-index:-1;
+  left:-.18em;right:-.18em;top:.14em;bottom:.06em;
+  background:var(--highlight);
+  transform:rotate(-1.1deg) skewX(-9deg);
+  border-radius:.35em .6em .4em .5em;
+  mix-blend-mode:multiply;
+}
+
+/* ---------- index tab section marker ---------- */
+.tab{
+  display:inline-flex;align-items:baseline;gap:.6em;
+  font-family:var(--mono);font-size:var(--step--1);font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;
+  background:var(--ink);color:var(--paper);
+  padding:.5em 1.1em .55em;
+  border-radius:3px 3px 0 0;
+  transform:translateY(1px);
+}
+.tab .n{color:var(--highlight)}
+.tab-rule{border-top:2px solid var(--ink);margin-bottom:2.4rem}
+
+/* ---------- top bar ---------- */
+.topbar{
+  position:sticky;top:0;z-index:50;
+  background:rgba(255,253,247,.92);
+  backdrop-filter:saturate(1.2) blur(8px);
+  border-bottom:1px solid var(--rule);
+}
+.topbar .wrap{display:flex;align-items:center;gap:1rem;min-height:58px}
+.brandmark{display:flex;align-items:center;gap:.6rem;text-decoration:none;font-family:var(--display);font-weight:800;font-size:1.02rem;letter-spacing:-.01em}
+.brandmark img{width:30px;height:30px;border-radius:50%;display:block;border:1.5px solid var(--ink)}
+.topbar nav{margin-left:auto;display:flex;gap:1.4rem;align-items:center}
+.topbar nav a{font-family:var(--mono);font-size:var(--step--1);letter-spacing:.05em;text-decoration:none;color:var(--ink-soft);text-underline-offset:5px}
+.topbar nav a:not(.btn):hover{color:var(--ink);text-decoration:underline;text-decoration-color:var(--marker);text-decoration-thickness:2px}
+.topbar nav a.btn{color:var(--ink)}
+.topbar nav a.btn--sub{color:#fff}
+@media(max-width:760px){.topbar nav a.hide-sm{display:none}}
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;gap:.55em;
+  font-family:var(--display);font-weight:700;font-size:.98rem;
+  text-decoration:none;padding:.72em 1.25em;border-radius:999px;
+  border:2px solid var(--ink);background:var(--card);color:var(--ink);
+  transition:transform .16s ease, box-shadow .16s ease, background .16s ease;
+  box-shadow:3px 3px 0 var(--ink);
+}
+.btn:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--ink)}
+.btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.btn--sub{background:var(--marker);border-color:var(--marker-deep);box-shadow:3px 3px 0 var(--marker-deep);color:#fff}
+.btn--sub:hover{box-shadow:5px 5px 0 var(--marker-deep)}
+.btn--sm{padding:.5em .95em;font-size:.86rem;box-shadow:2px 2px 0 var(--ink)}
+.btn svg{width:1.1em;height:1.1em;flex:none}
+
+/* ---------- hero ---------- */
+.hero{padding-top:clamp(2.5rem,6vw,4.5rem);padding-bottom:clamp(2.5rem,5vw,4rem)}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:clamp(1.75rem,4vw,3.5rem);align-items:start}
+@media(max-width:900px){.hero-grid{grid-template-columns:1fr}}
+
+.eyebrow{
+  font-family:var(--mono);font-size:var(--step--1);font-weight:500;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);
+  display:flex;flex-wrap:wrap;align-items:center;gap:.7em;margin-bottom:1.1rem;
+}
+.eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--marker)}
+
+h1{font-size:var(--step-4)}
+h1 .line2{display:block}
+.lede{
+  font-size:clamp(1.06rem,1.9vw,1.28rem);color:var(--ink-soft);
+  max-width:34ch;margin-top:1.35rem;line-height:1.55;
+}
+.lede em{font-style:italic;color:var(--ink)}
+
+.hero-cta{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:2rem}
+
+/* stat row — figures matter here, so they get the space */
+.stats{
+  display:flex;flex-wrap:wrap;gap:0;margin-top:2.6rem;
+  border-top:1px solid var(--rule);
+}
+.stat{padding:1rem 1.6rem 0 0;margin-right:1.6rem;border-right:1px solid var(--rule)}
+.stat:last-child{border-right:0;margin-right:0}
+.stat b{display:block;font-family:var(--display);font-weight:800;font-size:var(--step-2);line-height:1;font-variant-numeric:tabular-nums}
+.stat span{font-family:var(--mono);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint)}
+
+/* portrait card — taped to the page */
+.portrait{position:relative;justify-self:end;width:100%;max-width:300px}
+@media(max-width:900px){.portrait{justify-self:start;max-width:260px}}
+.portrait-inner{
+  background:var(--card);padding:14px 14px 18px;
+  border:1px solid var(--rule);border-radius:2px;
+  box-shadow:0 18px 34px -22px rgba(36,48,58,.65);
+  transform:rotate(1.6deg);
+}
+.portrait-inner img{width:100%;display:block;border-radius:1px}
+.portrait-cap{
+  display:flex;justify-content:space-between;align-items:baseline;gap:.5rem;
+  margin-top:.7rem;font-family:var(--mono);font-size:.72rem;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);
+}
+.tape{
+  position:absolute;top:-13px;left:50%;width:104px;height:26px;
+  transform:translateX(-50%) rotate(-3deg);
+  background:rgba(255,228,92,.62);border:1px solid rgba(220,196,60,.4);
+}
+.countdown{
+  margin-top:1.15rem;background:var(--mint-soft);border:1px solid #BFE6DF;
+  border-radius:2px;padding:.85rem 1rem;
+}
+.countdown .k{font-family:var(--mono);font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;color:#0B7A6D;display:block}
+.countdown .v{display:block;margin-top:.2rem;font-family:var(--display);font-weight:800;font-size:1.5rem;line-height:1.15;color:#0B5F55;font-variant-numeric:tabular-nums}
+.countdown .v small{font-family:var(--body);font-weight:400;font-size:.86rem;color:#0B7A6D}
+
+/* ---------- section shell ---------- */
+section{padding-block:clamp(3rem,6vw,4.75rem)}
+.band{background:var(--kraft);border-block:1px solid var(--rule)}
+.sec-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:1rem 2rem;margin-bottom:1.6rem}
+.sec-head h2{font-size:var(--step-3);max-width:18ch}
+.sec-head p{color:var(--ink-soft);max-width:44ch;font-size:.98rem}
+
+/* ---------- what you'll find: a checklist, not cards ---------- */
+.list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 clamp(2rem,5vw,4rem)}
+@media(max-width:760px){.list{grid-template-columns:1fr}}
+.list li{
+  list-style:none;display:grid;grid-template-columns:28px 1fr;gap:.9rem;
+  padding:1.15rem 0;border-bottom:1px solid var(--rule);align-items:start;
+}
+.list{margin:0;padding:0}
+.check{width:26px;height:26px;flex:none;margin-top:.1rem}
+.list h3{font-size:1.06rem;font-weight:700;letter-spacing:-.005em}
+.list p{color:var(--ink-soft);font-size:.96rem;margin-top:.28rem;line-height:1.5}
+
+/* ---------- shorts filmstrip ---------- */
+.strip{
+  display:grid;grid-auto-flow:column;grid-auto-columns:186px;gap:1rem;
+  overflow-x:auto;padding-bottom:1.2rem;scroll-snap-type:x proximity;
+  scrollbar-color:var(--rule) transparent;
+}
+.strip::-webkit-scrollbar{height:9px}
+.strip::-webkit-scrollbar-thumb{background:var(--rule);border-radius:99px}
+.short{
+  scroll-snap-align:start;text-decoration:none;display:block;
+  transition:transform .18s ease;
+}
+.short:hover{transform:translateY(-4px)}
+.short-frame{
+  position:relative;aspect-ratio:9/16;overflow:hidden;border-radius:10px;
+  border:1px solid var(--rule);background:var(--kraft);
+  box-shadow:0 10px 22px -16px rgba(36,48,58,.7);
+}
+.short-frame img{width:100%;height:100%;object-fit:cover;display:block}
+.short-views{
+  position:absolute;left:8px;bottom:8px;
+  font-family:var(--mono);font-size:.7rem;font-weight:700;
+  background:var(--paper);color:var(--ink);padding:.28em .55em;border-radius:99px;
+}
+.short-rank{
+  position:absolute;right:8px;top:8px;width:24px;height:24px;border-radius:50%;
+  background:var(--marker);color:#fff;font-family:var(--mono);font-size:.68rem;font-weight:700;
+  display:grid;place-items:center;
+}
+.short h3{font-size:.9rem;font-weight:600;font-family:var(--body);line-height:1.35;margin-top:.6rem;color:var(--ink)}
+.strip-hint{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-top:.2rem}
+
+/* ---------- live log ---------- */
+.live-grid{display:grid;grid-template-columns:1fr 268px;gap:clamp(2rem,5vw,3.5rem);align-items:start}
+@media(max-width:860px){.live-grid{grid-template-columns:1fr}}
+.log{border-top:1px solid var(--rule)}
+.log a{
+  display:grid;grid-template-columns:auto 1fr auto;gap:1rem;align-items:center;
+  padding:.95rem .4rem;border-bottom:1px solid var(--rule);text-decoration:none;
+  transition:background .15s ease,padding .15s ease;
+}
+.log a:hover{background:var(--card);padding-inline:.8rem}
+.livedot{width:9px;height:9px;border-radius:50%;background:var(--marker);flex:none}
+.log .title{display:block;font-size:.99rem;line-height:1.35}
+.log .when{display:block;font-family:var(--mono);font-size:.74rem;color:var(--ink-faint);letter-spacing:.04em;margin-top:.15rem}
+.log .views{font-family:var(--mono);font-size:.82rem;color:var(--ink-soft);white-space:nowrap}
+
+.pomo{background:var(--card);border:1px solid var(--rule);border-radius:2px;padding:1.4rem;text-align:center;box-shadow:var(--shadow-lift)}
+.pomo svg{width:150px;height:150px;display:block;margin:0 auto .8rem}
+.pomo h3{font-size:1.05rem}
+.pomo p{color:var(--ink-soft);font-size:.92rem;margin-top:.45rem;line-height:1.5}
+.pomo .cycle{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-top:.9rem;border-top:1px solid var(--rule-soft);padding-top:.7rem}
+
+/* ---------- long form ---------- */
+.vids{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(1.25rem,3vw,2rem)}
+@media(max-width:860px){.vids{grid-template-columns:1fr}}
+.vid{text-decoration:none;display:flex;flex-direction:column;gap:.75rem}
+.vid-thumb{position:relative;aspect-ratio:16/9;overflow:hidden;border-radius:8px;border:1px solid var(--rule);background:var(--kraft)}
+.vid-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s ease}
+.vid:hover .vid-thumb img{transform:scale(1.045)}
+.vid h3{font-size:1.04rem;line-height:1.28}
+.vid .meta{font-family:var(--mono);font-size:.75rem;color:var(--ink-faint);letter-spacing:.04em;display:flex;flex-wrap:wrap;gap:.5em}
+.chip{
+  display:inline-block;font-family:var(--mono);font-size:.68rem;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;padding:.3em .6em;border-radius:3px;
+  background:var(--highlight);color:#5A4A00;
+}
+.vid .chip{align-self:flex-start;margin-bottom:-.15rem}
+.chip--collab{background:var(--mint-soft);color:#0B5F55}
+
+/* ---------- pull quote ---------- */
+.quote-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,4rem);align-items:center}
+@media(max-width:860px){.quote-grid{grid-template-columns:1fr}}
+blockquote{
+  margin:0;font-family:var(--display);font-weight:600;
+  font-size:clamp(1.5rem,3.2vw,2.15rem);line-height:1.18;letter-spacing:-.02em;
+}
+blockquote .attr{
+  display:block;margin-top:1.3rem;font-family:var(--mono);font-size:.76rem;
+  font-weight:400;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);
+}
+.about p+p{margin-top:1rem}
+.about p{color:var(--ink-soft);line-height:1.65}
+.about strong{color:var(--ink);font-weight:600}
+
+/* ---------- final cta ---------- */
+.cta{text-align:center;padding-block:clamp(3.5rem,7vw,5.5rem)}
+.cta h2{font-size:var(--step-4);max-width:14ch;margin-inline:auto}
+.cta p{color:var(--ink-soft);max-width:40ch;margin:1.2rem auto 0}
+.cta .hero-cta{justify-content:center;margin-top:2.2rem}
+
+footer{border-top:1px solid var(--rule);padding-block:2rem;background:var(--kraft)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:.75rem 2rem;align-items:center;justify-content:space-between}
+footer p{font-family:var(--mono);font-size:.74rem;letter-spacing:.06em;color:var(--ink-faint)}
+footer a{color:var(--ink-soft);text-decoration:none;border-bottom:1px solid var(--rule)}
+footer a:hover{color:var(--marker);border-color:var(--marker)}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+}
+</style>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brandmark" href="https://www.youtube.com/@Daniyalkhanmedico" target="_blank" rel="noopener">
+      <img src="IMG:avatar.jpg" alt="">
+      Daniyalkhanmedico
+    </a>
+    <nav>
+      <a class="hide-sm" href="#shorts">Shorts</a>
+      <a class="hide-sm" href="#live">Live study</a>
+      <a class="hide-sm" href="#videos">Videos</a>
+      <a class="btn btn--sub btn--sm" href="https://www.youtube.com/@Daniyalkhanmedico?sub_confirmation=1" target="_blank" rel="noopener">Subscribe</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow"><span class="dot"></span> NEET 2027 aspirant <span aria-hidden="true">·</span> Lucknow <span aria-hidden="true">·</span> Hindi + English</p>
+      <h1>Same syllabus.<span class="line2">Same panic.</span><span class="line2"><span class="swipe">No filter.</span></span></h1>
+      <p class="lede">I'm not a topper handing down tricks. I'm an aspirant walking the same road &mdash; and filming it. <em>Study vlogs, late-night Pomodoro streams, and the days padhai ka mann nahi karta.</em></p>
+      <div class="hero-cta">
+        <a class="btn btn--sub" href="https://www.youtube.com/@Daniyalkhanmedico?sub_confirmation=1" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23 12s0-3.9-.5-5.8a3 3 0 0 0-2.1-2.1C18.5 3.6 12 3.6 12 3.6s-6.5 0-8.4.5A3 3 0 0 0 1.5 6.2C1 8.1 1 12 1 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 8.4.5 8.4.5s6.5 0 8.4-.5a3 3 0 0 0 2.1-2.1c.5-1.9.5-5.8.5-5.8ZM9.8 15.5v-7l6.2 3.5-6.2 3.5Z"/></svg>
+          Subscribe on YouTube
+        </a>
+        <a class="btn" href="https://www.youtube.com/@Daniyalkhanmedico/streams" target="_blank" rel="noopener">Join a study session</a>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>126</b><span>Subscribers</span></div>
+        <div class="stat"><b>74</b><span>Videos</span></div>
+        <div class="stat"><b>7</b><span>Live sessions this month</span></div>
+        <div class="stat"><b>2027</b><span>Target attempt</span></div>
+      </div>
+    </div>
+
+    <div class="portrait">
+      <span class="tape" aria-hidden="true"></span>
+      <div class="portrait-inner">
+        <img src="IMG:avatar.jpg" alt="Khan Daniyal, the creator of Daniyalkhanmedico">
+        <div class="portrait-cap"><span>Khan Daniyal</span><span>@Daniyalkhanmedico</span></div>
+      </div>
+      <div class="countdown">
+        <span class="k">Countdown to NEET UG</span>
+        <span class="v"><span id="days">237</span> days <small>&mdash; expected early May 2027</small></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WHAT YOU'LL FIND ================= -->
+<section class="band" id="about">
+  <div class="wrap">
+    <div class="tab"><span class="n">01</span> On the channel</div>
+    <div class="tab-rule"></div>
+    <div class="sec-head">
+      <h2>Six things you'll actually find here</h2>
+      <p>Straight from the channel description &mdash; no overhyped edits, no fake flex.</p>
+    </div>
+    <ul class="list">
+      <li>
+        <svg class="check" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3.5 13.2c2.4 1.4 4.2 3.1 5.5 5.3C12.4 12 16 7.5 21 4.2" stroke="#FF5470" stroke-width="2.6" stroke-linecap="round"/></svg>
+        <div><h3>Study vlogs</h3><p>Realistic routines filmed as they happen, not cut to look effortless.</p></div>
+      </li>
+      <li>
+        <svg class="check" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3.5 13.2c2.4 1.4 4.2 3.1 5.5 5.3C12.4 12 16 7.5 21 4.2" stroke="#FF5470" stroke-width="2.6" stroke-linecap="round"/></svg>
+        <div><h3>NEET motivation</h3><p>For the days you feel lost or low and the timetable has already collapsed.</p></div>
+      </li>
+      <li>
+        <svg class="check" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3.5 13.2c2.4 1.4 4.2 3.1 5.5 5.3C12.4 12 16 7.5 21 4.2" stroke="#FF5470" stroke-width="2.6" stroke-linecap="round"/></svg>
+        <div><h3>Consistency &amp; habits</h3><p>Discipline built one step at a time, tracked out loud on stream.</p></div>
+      </li>
+      <li>
+        <svg class="check" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3.5 13.2c2.4 1.4 4.2 3.1 5.5 5.3C12.4 12 16 7.5 21 4.2" stroke="#FF5470" stroke-width="2.6" stroke-linecap="round"/></svg>
+        <div><h3>Mistakes to avoid</h3><p>From one aspirant to another, while they're still fresh enough to sting.</p></div>
+      </li>
+      <li>
+        <svg class="check" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3.5 13.2c2.4 1.4 4.2 3.1 5.5 5.3C12.4 12 16 7.5 21 4.2" stroke="#FF5470" stroke-width="2.6" stroke-linecap="round"/></svg>
+        <div><h3>Progress and failures</h3><p>Live reactions, honest scores, and the weeks that went nowhere.</p></div>
+      </li>
+      <li>
+        <svg class="check" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3.5 13.2c2.4 1.4 4.2 3.1 5.5 5.3C12.4 12 16 7.5 21 4.2" stroke="#FF5470" stroke-width="2.6" stroke-linecap="round"/></svg>
+        <div><h3>Hindi + English</h3><p>Easy to connect with, hard to forget &mdash; whichever one you think in.</p></div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= SHORTS ================= -->
+<section id="shorts">
+  <div class="wrap">
+    <div class="tab"><span class="n">02</span> Shorts</div>
+    <div class="tab-rule"></div>
+    <div class="sec-head">
+      <h2>Most-watched, ranked by views</h2>
+      <p>Twenty seconds of exactly what class 11 and 12 feels like. Scroll the strip &mdash; every card opens the Short on YouTube.</p>
+    </div>
+    <div class="strip" id="strip" tabindex="0" role="region" aria-label="Most-watched Shorts, scrollable"></div>
+    <p class="strip-hint">Scroll sideways &rarr; 20 Shorts</p>
+  </div>
+</section>
+
+<!-- ================= LIVE ================= -->
+<section class="band" id="live">
+  <div class="wrap">
+    <div class="tab"><span class="n">03</span> Study with me</div>
+    <div class="tab-rule"></div>
+    <div class="sec-head">
+      <h2>Real-time Pomodoro, almost every night</h2>
+      <p>No commentary, no music drops. Camera on the desk, timer running, everyone works. Turn up whenever you sit down.</p>
+    </div>
+    <div class="live-grid">
+      <div class="log">
+        <a href="https://www.youtube.com/watch?v=uXyRTS4WFFk" target="_blank" rel="noopener">
+          <span class="livedot" aria-hidden="true"></span>
+          <span><span class="title">LIVE | study with me | pomodoro | real time study session</span><span class="when">Streamed 1 day ago</span></span>
+          <span class="views">114 views</span>
+        </a>
+        <a href="https://www.youtube.com/watch?v=oDbDUyW8Zgw" target="_blank" rel="noopener">
+          <span class="livedot" aria-hidden="true"></span>
+          <span><span class="title">LIVE | study with me | pomodoro | real time study session</span><span class="when">Streamed 1 day ago</span></span>
+          <span class="views">70 views</span>
+        </a>
+        <a href="https://www.youtube.com/watch?v=JD_9gl8PaoY" target="_blank" rel="noopener">
+          <span class="livedot" aria-hidden="true"></span>
+          <span><span class="title">LIVE | study with me | pomodoro | real time study session</span><span class="when">Streamed 2 days ago</span></span>
+          <span class="views">192 views</span>
+        </a>
+        <a href="https://www.youtube.com/watch?v=AremlXqGclo" target="_blank" rel="noopener">
+          <span class="livedot" aria-hidden="true"></span>
+          <span><span class="title">LIVE | study with me | pomodoro | real time study session</span><span class="when">Streamed 3 days ago</span></span>
+          <span class="views">248 views</span>
+        </a>
+        <a href="https://www.youtube.com/watch?v=NDQEyTpuWJo" target="_blank" rel="noopener">
+          <span class="livedot" aria-hidden="true"></span>
+          <span><span class="title">LIVE | study with me &#128218; | pomodoro | real time study session</span><span class="when">Streamed 4 days ago</span></span>
+          <span class="views">117 views</span>
+        </a>
+        <a href="https://www.youtube.com/watch?v=wcMTZfGBdAo" target="_blank" rel="noopener">
+          <span class="livedot" aria-hidden="true"></span>
+          <span><span class="title">Live study</span><span class="when">Streamed 2 weeks ago</span></span>
+          <span class="views">78 views</span>
+        </a>
+        <a href="https://www.youtube.com/watch?v=Qm4zuxPvZ8A" target="_blank" rel="noopener">
+          <span class="livedot" aria-hidden="true"></span>
+          <span><span class="title">Late night study</span><span class="when">Streamed 3 weeks ago</span></span>
+          <span class="views">63 views</span>
+        </a>
+      </div>
+
+      <div class="pomo">
+        <svg viewBox="0 0 120 120" role="img" aria-label="Pomodoro cycle: 25 minutes of focus, 5 minutes break">
+          <circle cx="60" cy="60" r="50" fill="none" stroke="#E7DFCC" stroke-width="11"/>
+          <circle cx="60" cy="60" r="50" fill="none" stroke="#FF5470" stroke-width="11" stroke-linecap="round"
+                  stroke-dasharray="261.8 314.2" transform="rotate(-90 60 60)"/>
+          <text x="60" y="56" text-anchor="middle" fill="#24303A" font-family="JetBrains Mono, monospace" font-size="25" font-weight="700">25</text>
+          <text x="60" y="72" text-anchor="middle" fill="#8B9AA4" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="1.6">MIN FOCUS</text>
+        </svg>
+        <h3>How the session runs</h3>
+        <p>Twenty-five minutes heads down, five minutes off, repeat until the chapter is done. Chat stays open the whole time.</p>
+        <p class="cycle">25 on &middot; 5 off &middot; repeat</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= VIDEOS ================= -->
+<section id="videos">
+  <div class="wrap">
+    <div class="tab"><span class="n">04</span> Long form</div>
+    <div class="tab-rule"></div>
+    <div class="sec-head">
+      <h2>When it needs more than a minute</h2>
+      <p>Batch breakdowns, syllabus explainers, and two collaborations with NEETily.</p>
+    </div>
+    <div class="vids">
+      <a class="vid" href="https://www.youtube.com/watch?v=h83FvzdBsZo" target="_blank" rel="noopener">
+        <div class="vid-thumb"><img src="IMG:v_h83FvzdBsZo.jpg" alt=""></div>
+        <span class="chip">Newest</span>
+        <h3>PW launches a FREE batch for NEET 2027 &mdash; what's actually in it</h3>
+        <p class="meta"><span>612 views</span><span>&middot;</span><span>4 days ago</span></p>
+      </a>
+      <a class="vid" href="https://www.youtube.com/watch?v=D2_R5IUF_u0" target="_blank" rel="noopener">
+        <div class="vid-thumb"><img src="IMG:v_D2_R5IUF_u0.jpg" alt=""></div>
+        <span class="chip chip--collab">With NEETily</span>
+        <h3>Life cycle of Plasmodium, start to finish</h3>
+        <p class="meta"><span>154 views</span><span>&middot;</span><span>Biology</span></p>
+      </a>
+      <a class="vid" href="https://www.youtube.com/watch?v=jf5ve1ky1J0" target="_blank" rel="noopener">
+        <div class="vid-thumb"><img src="IMG:v_jf5ve1ky1J0.jpg" alt=""></div>
+        <span class="chip chip--collab">With NEETily</span>
+        <h3>Exam = anxiety, depression. Talking about it properly.</h3>
+        <p class="meta"><span>639 views</span><span>&middot;</span><span>Most viewed</span></p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= QUOTE / ABOUT ================= -->
+<section class="band">
+  <div class="wrap quote-grid">
+    <blockquote>
+      &ldquo;This channel is not about fake vibes or fancy toppers-only tricks &mdash; it's raw, real, and relatable.&rdquo;
+      <span class="attr">Khan Daniyal &mdash; channel description</span>
+    </blockquote>
+    <div class="about">
+      <p>Whether you're in <strong>class 10, 11, or 12</strong>, or starting from scratch this week, the plan is the same: show up, put the timer on, and be honest about how it went.</p>
+      <p>Seventy-four videos in, that's still all it is. Study vlogs when the day was good. Shorts when it wasn't. A live stream most nights so nobody has to sit down alone.</p>
+      <p><strong>We're here to improve. Let's crack NEET, together.</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CTA ================= -->
+<section class="cta">
+  <div class="wrap">
+    <h2><span class="swipe">Sit down.</span> Timer's already running.</h2>
+    <p>Subscribe and the next Pomodoro session shows up in your feed &mdash; usually late, usually long.</p>
+    <div class="hero-cta">
+      <a class="btn btn--sub" href="https://www.youtube.com/@Daniyalkhanmedico?sub_confirmation=1" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23 12s0-3.9-.5-5.8a3 3 0 0 0-2.1-2.1C18.5 3.6 12 3.6 12 3.6s-6.5 0-8.4.5A3 3 0 0 0 1.5 6.2C1 8.1 1 12 1 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 8.4.5 8.4.5s6.5 0 8.4-.5a3 3 0 0 0 2.1-2.1c.5-1.9.5-5.8.5-5.8ZM9.8 15.5v-7l6.2 3.5-6.2 3.5Z"/></svg>
+        Subscribe &mdash; it's free
+      </a>
+      <a class="btn" href="https://www.youtube.com/@Daniyalkhanmedico/shorts" target="_blank" rel="noopener">Browse all Shorts</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Khan Daniyal &middot; <a href="https://www.youtube.com/@Daniyalkhanmedico" target="_blank" rel="noopener">youtube.com/@Daniyalkhanmedico</a></p>
+    <p>Fan-made landing page &middot; counts as shown on the channel</p>
+  </div>
+</footer>
+
+<script>
+// Shorts, ordered by view count as listed on the channel.
+var SHORTS = [
+  ["wH2GWeEy1Rk","ever night end like this 🫥","3.4K"],
+  ["hsFEWgQSlsg","sirrrrrr 🥺","2.6K"],
+  ["6V-8qBxLDxI","samjhe 🙂?","1.9K"],
+  ["jpH4PdfT-3E","Just good at not giving up","1.7K"],
+  ["A7IWIafsdUc","padhai ka mann nahi h 🥲","1.4K"],
+  ["NlbAhGmpa0Y","work on goals 🎯","1.2K"],
+  ["QG6_tqAnrfM","Maturity is realising “yaar maine toh kuch nahi padha hai” is not cool","1.2K"],
+  ["BwBCNqBJ2x8","fr 💀 the cockroach chapter","1.2K"],
+  ["Yov9WN8fYk4","Avg classroom mahool 😂","1.2K"],
+  ["NKgJXEt3qJA","life got stuck in vectors 😭","1.2K"],
+  ["AnlpMpakfbo","Keep chasing. One day it'll all be worth it.","1.1K"],
+  ["arLdoQCwR2U","Parents ka pressure nahi — unki sacrifices","1.1K"],
+  ["2pnyeVTHw5Y","comeback ki jagah, back come ho gaya","1K"],
+  ["eLZqee-ytAQ","fr 🥲 physics vs biology","1K"],
+  ["s5UTDnEPqmI","mast scene h 😂","998"],
+  ["B01nBSqx1bg","genuine reason 🙂","897"],
+  ["Ive53m0HYrE","AIIMS Dholakpur","588"],
+  ["txIFSkWGoaA","The only option left 🥲","530"],
+  ["g5DQMkhILw4","Some cities don't need daylight 🌙","241"],
+  ["9vYmPkz1W-4","ft. a day in the life of a NEET aspirant","120"]
+];
+var THUMBS = __THUMBS__;
+
+var strip = document.getElementById('strip');
+SHORTS.forEach(function(s, i){
+  var a = document.createElement('a');
+  a.className = 'short';
+  a.href = 'https://www.youtube.com/shorts/' + s[0];
+  a.target = '_blank';
+  a.rel = 'noopener';
+  var frame = document.createElement('div');
+  frame.className = 'short-frame';
+  var img = document.createElement('img');
+  img.src = THUMBS[s[0]];
+  img.alt = '';
+  img.loading = i > 5 ? 'lazy' : 'eager';
+  var rank = document.createElement('span');
+  rank.className = 'short-rank';
+  rank.textContent = i + 1;
+  var views = document.createElement('span');
+  views.className = 'short-views';
+  views.textContent = s[2] + ' views';
+  frame.appendChild(img); frame.appendChild(rank); frame.appendChild(views);
+  var h = document.createElement('h3');
+  h.textContent = s[1];
+  a.appendChild(frame); a.appendChild(h);
+  strip.appendChild(a);
+});
+
+// Days to the expected NEET UG 2027 paper (first Sunday of May).
+(function(){
+  var target = new Date(2027, 4, 2);
+  var today = new Date(); today.setHours(0,0,0,0);
+  var days = Math.max(0, Math.round((target - today) / 86400000));
+  document.getElementById('days').textContent = days;
+})();
+</script>
